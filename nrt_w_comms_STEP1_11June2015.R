@@ -12,9 +12,11 @@
 
 library(RODBC)
 
-#setwd("C:\\Users\\jeffrey.worden\\Dropbox\\NRT\\Research and Monitoring\\CoMMS\\Wild_CoMMS_BE\\NRT_CoMMs_BE_Latest\\")
-setwd("C:\\Worden\\Dropbox\\NRT\\Research and Monitoring\\CoMMS\\Wild_CoMMS_BE\\")
-#C:\Worden\Dropbox\NRT\Research and Monitoring\CoMMS\Wild_CoMMS_BE
+dir2 <- "C:/Users/jeffr_000/Dropbox (NRT Kenya)/wildlife_comms_BE_2014"
+dir3 <- "C:/Users/jeffr_000/Dropbox (NRT Kenya)/w_comms/clean_data/"
+
+setwd(dir2)
+
 f1 <- list.files(pattern=".mdb", full.names=T)
 
 obs <- vector("list")
@@ -191,6 +193,7 @@ ccy_loc_obs <- sort(unique(obs_all$ccy_loc))
 #export the results to a .csv file with todays date
 #write.csv(obs_all,"C:\\DATA\\NRT\\wild_comms\\_data_cleaning\\results\\NRT_w_comms_data_cleaning_OUTPUT3_unique.csv",row.names=F)
 #write.csv(obs_all,paste("C:\\DATA\\NRT\\wild_comms\\_data_cleaning\\results\\NRT_w_comms_data_cleaning_OUTPUT1_unique","_",Sys.Date(),".csv",sep=""),row.names=F)
+write.csv(obs_all,paste(dir3,"/","CLEAN1","_",Sys.Date(),".csv",sep=""),row.names=F)
 
 ######################################################
 #   Import location names and coordinates
