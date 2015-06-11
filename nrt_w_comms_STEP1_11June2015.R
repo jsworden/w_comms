@@ -26,6 +26,7 @@ for(i in 1:length(f1)){
   obs[[i]] <- sqlFetch(ch1,"tblWildlifeObservations")
 }
 
+obs_temp <- obs
 
 #check to see if all the column names are in order
 nam <- vector("list")
@@ -33,8 +34,10 @@ for(i in 1:length(obs)){
   nam[[i]] <- names(obs[[i]])
 }
 
+nam
 # if some column names are not correct then change them...
-
+#obs[[2]] <- obs[[2]][,c(1:9,11,10,12:14)]
+#obs[[3]] <- obs[[3]][,c(1:9,11,10,12:14)]
 
 obs1 <- vector("list")
 # create unique IDs for all observations
@@ -90,32 +93,32 @@ date1 <- as.POSIXlt(obs_all$Date)
 obs_all$year <- date1$year +1900
 obs_all$error[is.na(obs_all$Date)==T] <- 1
 obs_all$error[which(obs_all$year < 2004)] <- 1
-obs_all$error[which(obs_all$year > 2014)] <- 1
+obs_all$error[which(obs_all$year > 2015)] <- 1
 # 165 records with missing or erroneous dates
 
 obs_all$Date[obs_all$error==1]
-which(obs_all$error==1)  # 165 records with missing or erroneous dates
+which(obs_all$error==1)  # 196 records with missing or erroneous dates 11 June 2015
 
 # indicate rows with species = NA
 obs_all$error[which(is.na(obs_all$Species)==T)] <- 1
-    length(which(is.na(obs_all$Species)==T))  # 324 missing species names
+    length(which(is.na(obs_all$Species)==T))  # 376 missing species names
 
 # missing XY coordinates
 obs_all$error[is.na(obs_all$UTMX)==T] <- 1
 obs_all$error[is.na(obs_all$UTMY)==T] <- 1
     length(which(is.na(obs_all$UTMX)==T |is.na(obs_all$UTMY)==T ))
-      # 12343 observations missing either X or Y or both coordinates
+      # 12520 observations missing either X or Y or both coordinates
 
 #missing numbers
 
 obs_all$error[is.na(obs_all$NumIndiv)==T] <- 1
 obs_all$error[obs_all$NumIndiv==0] <- 1
     length(which(is.na(obs_all$NumIndiv)==T | obs_all$NumIndiv==0))
-      # 735 observations with missing or zero(0) individuals recorded
+      # 872 observations with missing or zero(0) individuals recorded
 
-sum(obs_all$error) # total erroneous observations = 13067 out of 199957
-                    # for an overall error rate of 0.065 percent
-
+sum(obs_all$error) # total erroneous observations = 13399 out of 308369
+                    # for an overall error rate of 0.0434 percent
+sum(obs_all$error)/length(obs_all$error)
 
 ##############################################
 # Cleaning species names
@@ -132,6 +135,7 @@ obs_all$spp[obs_all$spp=="BUFALLO"] <- "BUFFALO"
 obs_all$spp[obs_all$spp=="BUFALO"] <- "BUFFALO"
 obs_all$spp[obs_all$spp=="BUSH BACK"] <- "BUSHBUCK"
 obs_all$spp[obs_all$spp=="BUSH BUCK"] <- "BUSHBUCK"
+obs_all$spp[obs_all$spp=="BUSH BICK"] <- "BUSHBUCK"
 obs_all$spp[obs_all$spp=="BUSHBACK"] <- "BUSHBUCK"
 obs_all$spp[obs_all$spp=="CHEATAH"] <- "CHEETAH"
 obs_all$spp[obs_all$spp=="CLIPSPRINGER"] <- "KLIPSPRINGER"
@@ -195,6 +199,13 @@ ccy_loc_obs <- sort(unique(obs_all$ccy_loc))
 #write.csv(obs_all,paste("C:\\DATA\\NRT\\wild_comms\\_data_cleaning\\results\\NRT_w_comms_data_cleaning_OUTPUT1_unique","_",Sys.Date(),".csv",sep=""),row.names=F)
 write.csv(obs_all,paste(dir3,"/","CLEAN1","_",Sys.Date(),".csv",sep=""),row.names=F)
 
+
+
+
+
+
+
+### NEEDS TO BE UPDATED ####
 ######################################################
 #   Import location names and coordinates
 

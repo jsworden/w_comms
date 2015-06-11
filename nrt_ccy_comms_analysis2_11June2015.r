@@ -9,15 +9,15 @@
 library(R2wd)
 dir1 <- "C:/Users/jeffr_000/Dropbox (NRT Kenya)/w_comms"
 dir2 <- "C:/Users/jeffr_000/Dropbox (NRT Kenya)/wildlife_comms_BE_2014"
+dir3 <- "C:/Users/jeffr_000/Dropbox (NRT Kenya)/w_comms/clean_data/"
 
-setwd(dir2)
-setwd("C:\\DATA\\NRT\\wild_comms\\_data_cleaning\\")
+setwd(dir3)
 
 dir()
 
 
 
-x <- read.csv("Cleaned_NEWID.csv",header=T)
+x <- read.csv("CLEAN1_2015-06-11.csv",header=T)
 p <- read.csv("Patrol_effort_Combined_10Mar2014.csv", header=T)
 
 ccy <- unique(x$Conservancy)
